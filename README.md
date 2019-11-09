@@ -32,10 +32,10 @@ Dummy REST API for testing purposes.
 
 Example:
 
-```JSON
+```javascript
 {
-	"title": "My Todo",
-	"description": "My todo description"
+  "title": "My Todo",
+  "description": "My todo description"
 }
 ```
 
