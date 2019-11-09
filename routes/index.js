@@ -8,6 +8,7 @@ router.get(`${ToDosEndPoint}`, TodoController.getAllToDos);
 router.get(`${ToDosEndPoint}/:id`, TodoController.getTodo);
 router.post(`${ToDosEndPoint}`, TodoController.createTodo);
 router.put(`${ToDosEndPoint}/:id`, TodoController.updateTodo);
+router.put(`${ToDosEndPoint}/:id/done`, TodoController.markTodoDone);
 router.delete(`${ToDosEndPoint}/:id`, TodoController.deleteTodo);
 
 export default router;

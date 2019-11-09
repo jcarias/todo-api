@@ -43,7 +43,9 @@ class ToDosController {
     const todo = {
       id: new Date().getTime(),
       title: req.body.title,
-      description: req.body.description
+      description: req.body.description,
+      done: false,
+      doneDate: null
     };
     db.push(todo);
     return res.status(201).send({
@@ -77,7 +79,9 @@ class ToDosController {
     const updatedTodo = {
       id: todoFound.id,
       title: req.body.title || todoFound.title,
-      description: req.body.description || todoFound.description
+      description: req.body.description || todoFound.description,
+      done: req.body.done || todoFound.done,
+      doneDate: req.body.doneDate || todoFound.doneDate
     };
 
     db.splice(itemIndex, 1, updatedTodo);
@@ -85,6 +89,53 @@ class ToDosController {
     return res.status(201).send({
       success: "true",
       message: "todo updated successfully",
+      updatedTodo
+    });
+  }
+
+  markTodoDone(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let todoFound = undefined;
+    let itemIndex = -1;
+
+    for (let i = 0; i < db.length; i++) {
+      const todo = db[i];
+      if (todo.id === id) {
+        todoFound = todo;
+        itemIndex = i;
+        break;
+      }
+    }
+
+    if (!todoFound) {
+      return res.status(404).send({
+        success: "false",
+        message: "todo not found"
+      });
+    }
+
+    if (todoFound.done) {
+      return res.status(400).send({
+        success: "false",
+        message: `This todo has already been completed @${new Date(
+          todoFound.doneDate
+        ).toISOString()}`
+      });
+    }
+
+    const updatedTodo = {
+      id: todoFound.id,
+      title: todoFound.title,
+      description: todoFound.description,
+      done: true,
+      doneDate: req.body.doneDate || new Date().getTime()
+    };
+
+    db.splice(itemIndex, 1, updatedTodo);
+
+    return res.status(201).send({
+      success: "true",
+      message: "todo completed successfully",
       updatedTodo
     });
   }
