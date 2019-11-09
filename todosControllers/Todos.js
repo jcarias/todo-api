@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import db from "../db/db";
+import uuidV4 from "uuid/v4";
 
 class ToDosController {
   getAllToDos(req, res) {
@@ -41,7 +42,7 @@ class ToDosController {
       });
     }
     const todo = {
-      id: new Date().getTime(),
+      id: uuidV4(),
       title: req.body.title,
       description: req.body.description,
       done: false,
