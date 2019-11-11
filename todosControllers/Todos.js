@@ -12,8 +12,7 @@ class ToDosController {
   }
 
   getTodo(req, res) {
-    const id = parseInt(req.params.id, 10);
-    const foundToDo = db.find(todo => todo.id === id);
+    const foundToDo = db.find(todo => todo.id === req.params.id);
 
     if (foundToDo !== undefined) {
       return res.status(200).send({
@@ -57,7 +56,7 @@ class ToDosController {
   }
 
   updateTodo(req, res) {
-    const id = parseInt(req.params.id, 10);
+    const id = req.params.id;
     let todoFound = undefined;
     let itemIndex = -1;
 
@@ -95,7 +94,7 @@ class ToDosController {
   }
 
   markTodoDone(req, res) {
-    const id = parseInt(req.params.id, 10);
+    const id = req.params.id;
     let todoFound = undefined;
     let itemIndex = -1;
 
@@ -142,7 +141,7 @@ class ToDosController {
   }
 
   deleteTodo(req, res) {
-    const id = parseInt(req.params.id, 10);
+    const id = req.params.id;
     const foundToDoIndex = db.findIndex(todo => todo.id === id);
 
     if (foundToDoIndex >= 0) {
